@@ -1,96 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
 
-class Sarki
+namespace SifreMatik
 {
-    public string Ad { get; set; }
-    public string Sanatci { get; set; }
-    public int Sure { get; set; }
-
-    public Sarki(string ad, string sanatci, int sure)
+    class Program
     {
-        Ad = ad;
-        Sanatci = sanatci;
-        Sure = sure;
-    }
-
-    public override string ToString()
-    {
-        return $"{Ad} - {Sanatci} ({Sure} dk)";
-    }
-}
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        LinkedList<Sarki> calmaListesi = new LinkedList<Sarki>();
-
-        calmaListesi.AddLast(new Sarki("Dönence", "Barış Manço", 4));
-        calmaListesi.AddLast(new Sarki("Gül Pembe", "Barış Manço", 5));
-        calmaListesi.AddLast(new Sarki("Sarışın", "MFÖ", 3));
-
-        LinkedListNode<Sarki> suankiSarki = calmaListesi.First;
-
-        while (true)
+        static void Main(string[] args)
         {
-            Console.WriteLine("\nŞu an çalan: " + suankiSarki.Value);
-            Console.WriteLine("\n1- Sonraki Şarkı");
-            Console.WriteLine("2- Önceki Şarkı");
-            Console.WriteLine("3- Araya Şarkı Ekle");
-            Console.WriteLine("4- Çıkış");
+            Console.Title = "ŞİFREMATİK";
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.Write("Seçiminiz: ");
-            int secim = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("=== ŞİFREMATİK ===");
+            
 
-            switch (secim)
+            string karakterler = "ABCDEFGHJKLMNOPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz0123456789!@#$%^&*";
+
+            Random rnd = new Random();
+
+            int uzunluk = 8;
+            string yeniSifre = "";
+
+            for (int i = 0; i < uzunluk; i++)
             {
-                case 1:
-                    if (suankiSarki.Next != null)
-                    {
-                        suankiSarki = suankiSarki.Next;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Son şarkıdasınız.");
-                    }
-                    break;
-
-                case 2:
-                    if (suankiSarki.Previous != null)
-                    {
-                        suankiSarki = suankiSarki.Previous;
-                    }
-                    else
-                    {
-                        Console.WriteLine("İlk şarkıdasınız.");
-                    }
-                    break;
-
-                case 3:
-                    Console.Write("Şarkı adı: ");
-                    string ad = Console.ReadLine();
-
-                    Console.Write("Sanatçı: ");
-                    string sanatci = Console.ReadLine();
-
-                    Console.Write("Süre (dk): ");
-                    int sure = Convert.ToInt32(Console.ReadLine());
-
-                    Sarki yeniSarki = new Sarki(ad, sanatci, sure);
-
-                    calmaListesi.AddAfter(suankiSarki, yeniSarki);
-
-                    Console.WriteLine("Şarkı eklendi.");
-                    break;
-
-                case 4:
-                    return;
-
-                default:
-                    Console.WriteLine("Geçersiz seçim.");
-                    break;
+                int rastgeleIndex = rnd.Next(karakterler.Length);
+                yeniSifre += karakterler[rastgeleIndex];
             }
+
+            // 5. SONUÇ
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("GÜVENLİ ŞİFRE: " + yeniSifre);
+            Console.WriteLine("------------------------------------------");
+
+            Console.ResetColor();
+            Console.WriteLine("\nYenisini üretmek için programı tekrar açabilirsin.");
+            Console.WriteLine("Kapatmak için bir tuşa bas...");
+            Console.ReadKey();
         }
     }
 }
